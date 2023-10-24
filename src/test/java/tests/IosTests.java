@@ -13,7 +13,7 @@ public class IosTests extends TestBase {
 
     @Test
     @Tag("ios")
-    @DisplayName("Проверка результата поиска quality Assurance")
+    @DisplayName("Проверка результата поиска Quality Assurance")
     void iosSearchTest() {
         step("Ввод в поле Quality assurance", () -> {
             $(accessibilityId("Text Button")).click();
