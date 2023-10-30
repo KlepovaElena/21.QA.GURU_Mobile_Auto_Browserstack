@@ -15,6 +15,7 @@ public interface AuthConfig extends Config {
     String getKey();
 
     @Key("remoteUrl")
+    @DefaultValue("https://hub.browserstack.com/wd/hub")
     String getRemoteUrl();
 
 }

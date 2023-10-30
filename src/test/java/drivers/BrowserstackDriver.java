@@ -1,6 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import configs.ConfigReader;
 import configs.MobileConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
@@ -20,22 +21,22 @@ public class BrowserstackDriver implements WebDriverProvider {
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
 
-        MobileConfig mobile = ConfigFactory.create(MobileConfig.class, System.getProperties());
-        AuthConfig auth = ConfigFactory.create(AuthConfig.class, System.getProperties());
+        AuthConfig authConfig = ConfigReader.Instance.getAuthConfig();
+        MobileConfig mobileConfig = ConfigReader.Instance.getMobileConfig();
 
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
 
 
         // Set your access credentials
-        mutableCapabilities.setCapability("browserstack.user", auth.getUser());
-        mutableCapabilities.setCapability("browserstack.key", auth.getKey());
+        mutableCapabilities.setCapability("browserstack.user", authConfig.getUser());
+        mutableCapabilities.setCapability("browserstack.key", authConfig.getKey());
 
         // Set URL of the application under test
-        mutableCapabilities.setCapability("app", mobile.getApp());
+        mutableCapabilities.setCapability("app", mobileConfig.getApp());
 
         // Specify device and os_version for testing
-        mutableCapabilities.setCapability("device", mobile.getDevice());
-        mutableCapabilities.setCapability("os_version", mobile.getOsVersion());
+        mutableCapabilities.setCapability("device", mobileConfig.getDevice());
+        mutableCapabilities.setCapability("os_version", mobileConfig.getOsVersion());
 
         // Set other BrowserStack capabilities
         mutableCapabilities.setCapability("project", "First Java Project");
@@ -46,7 +47,7 @@ public class BrowserstackDriver implements WebDriverProvider {
         // and desired capabilities defined above
         try {
             return new RemoteWebDriver(
-                    new URL(auth.getRemoteUrl()), mutableCapabilities);
+                    new URL(authConfig.getRemoteUrl()), mutableCapabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
