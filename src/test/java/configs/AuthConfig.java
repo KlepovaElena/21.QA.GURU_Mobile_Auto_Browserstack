@@ -2,9 +2,7 @@ package configs;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources({
-        "classpath:auth.properties"
-})
+@Config.Sources({"classpath:credentials.properties"})
 
 public interface AuthConfig extends Config {
 
@@ -14,8 +12,7 @@ public interface AuthConfig extends Config {
     @Key("key")
     String getKey();
 
-    @Key("remoteUrl")
+    @Key("url")
     @DefaultValue("https://hub.browserstack.com/wd/hub")
-    String getRemoteUrl();
-
+    String getURL();
 }
